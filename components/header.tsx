@@ -71,8 +71,12 @@ export default function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto flex gap-2">
-          <Button variant="outline">Sign in</Button>
-          <Button>Sign Up</Button>
+          <Link href="/auth/login">
+            <Button variant="outline">Log In</Button>
+          </Link>
+          <Link href="/auth/signup">
+            <Button>Sign Up</Button>
+          </Link>
           <ThemeModeToggle />
         </div>
       </header>
