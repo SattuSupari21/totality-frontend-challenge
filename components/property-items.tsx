@@ -8,11 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { propertyState } from "@/state/atoms/property";
+import { MapPin } from "lucide-react";
+import { useRecoilValue } from "recoil";
 
 export default function PropertyItems() {
-  return (
-    <main className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-      {properties.map((item) => (
+  const propertyListings = useRecoilValue(propertyState);
+
+  return propertyListings.items.length < 1 ? (
+    <div className="w-full text-center">No Content to show</div>
+  ) : (
+    <main className="grid lg:grid-cols-3 grid-rows-2 md:grid-cols-2 gap-4">
+      {propertyListings.items.map((item) => (
         <Card key={item.id} className="flex flex-col justify-between shadow-lg">
           <CardHeader>
             <img
@@ -21,7 +28,10 @@ export default function PropertyItems() {
               className="rounded-xl"
             />
             <CardTitle className="pt-2 text-xl">{item.title}</CardTitle>
-            <CardDescription>{item.location}</CardDescription>
+            <CardDescription className="flex items-center gap-1">
+              <MapPin className="w-4 h-4" />
+              {item.location}
+            </CardDescription>
             <div className="flex items-center justify-between">
               <span className="font-bold text-sm">Rs. {item.price}</span>
               <span className="font-bold text-sm">

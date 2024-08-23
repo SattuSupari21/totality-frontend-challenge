@@ -14,7 +14,7 @@ export default function Signup() {
 
   return (
     <main className="flex items-center justify-center">
-      <div className="max-[660px]:h-screen max-[660px]:w-screen max-[660px]:rounded-none max-[660px]:p-2 max-[660px]:m-0 flex flex-col gap-4 border p-12 mt-24 rounded-xl bg-accent shadow-lg">
+      <div className="max-[660px]:h-screen max-[660px]:w-screen max-[660px]:rounded-none max-[660px]:p-12 max-[660px]:m-0 flex flex-col gap-4 border p-12 mt-24 rounded-xl bg-accent shadow-lg">
         <div className="flex flex-col gap-4 my-auto">
           <div className="flex flex-col mb-2">
             <span className="text-3xl font-medium text-center">

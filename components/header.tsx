@@ -7,10 +7,13 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { Menu } from "lucide-react";
-import { ThemeProvider } from "./theme-provider";
 import { ThemeModeToggle } from "./theme-mode-toggle";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/state/atoms/user";
 
 export default function Header() {
+  const user = useRecoilValue(userState);
+
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8">
       <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
@@ -70,15 +73,22 @@ export default function Header() {
             </NavigationMenuLink>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="ml-auto flex gap-2">
-          <Link href="/auth/login">
-            <Button variant="outline">Log In</Button>
-          </Link>
-          <Link href="/auth/signup">
-            <Button>Sign Up</Button>
-          </Link>
-          <ThemeModeToggle />
-        </div>
+        {!user.isLoading && !user.name ? (
+          <div className="ml-auto flex gap-2 items-center">
+            <Link href="/auth/login">
+              <Button variant="outline">Log In</Button>
+            </Link>
+            <Link href="/auth/signup">
+              <Button>Sign Up</Button>
+            </Link>
+            <ThemeModeToggle />
+          </div>
+        ) : (
+          <div className="ml-auto flex gap-2 items-center">
+            <span>Hello, {user.name}</span>
+            <ThemeModeToggle />
+          </div>
+        )}
       </header>
     </div>
   );
