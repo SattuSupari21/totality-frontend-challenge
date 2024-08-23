@@ -5,6 +5,7 @@ export type Property = {
   description: string;
   location: string;
   bedrooms: number;
+  type: string;
   amenities?: string[];
   price: number;
 };

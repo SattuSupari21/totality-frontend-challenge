@@ -41,6 +41,7 @@ export default function PropertyItems() {
           </CardHeader>
           <CardContent>
             <div className="flex gap-2 mb-2">
+              <Badge>{item.type}</Badge>
               {item.amenities?.map((amenity, index) => (
                 <Badge variant="outline" key={index}>
                   {amenity}
