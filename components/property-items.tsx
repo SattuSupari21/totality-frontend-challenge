@@ -11,7 +11,7 @@ import {
 
 export default function PropertyItems() {
   return (
-    <main className="container grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+    <main className="container grid lg:grid-cols-3 md:grid-cols-2 gap-4 py-4">
       {properties.map((item) => (
         <Card key={item.id} className="flex flex-col justify-between shadow-lg">
           <CardHeader>

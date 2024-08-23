@@ -1,8 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/tOnF6UPDszh
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -12,6 +7,8 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { Menu } from "lucide-react";
+import { ThemeProvider } from "./theme-provider";
+import { ThemeModeToggle } from "./theme-mode-toggle";
 
 export default function Header() {
   return (
@@ -76,6 +73,7 @@ export default function Header() {
         <div className="ml-auto flex gap-2">
           <Button variant="outline">Sign in</Button>
           <Button>Sign Up</Button>
+          <ThemeModeToggle />
         </div>
       </header>
     </div>
