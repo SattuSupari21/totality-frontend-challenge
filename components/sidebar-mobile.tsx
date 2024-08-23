@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import SidebarContent from "./sidebar-content";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export default function SidebarMobile() {
   return (
@@ -21,14 +23,17 @@ export default function SidebarMobile() {
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-            <DrawerDescription>This action cannot be undone.</DrawerDescription>
+            <DrawerTitle>Filters</DrawerTitle>
+            <DrawerDescription>Select filters to apply.</DrawerDescription>
           </DrawerHeader>
+          <div className="p-4 pb-0">
+            <SidebarContent />
+          </div>
           <DrawerFooter>
             <div className="flex items-center justify-between gap-2">
               <Button className="flex-1">Apply Filters</Button>
               <DrawerClose className="flex-1" asChild>
-                <Button variant={"secondary"}>Close</Button>
+                <Button variant={"outline"}>Close</Button>
               </DrawerClose>
             </div>
           </DrawerFooter>

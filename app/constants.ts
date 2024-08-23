@@ -43,3 +43,28 @@ export const properties: Property[] = [
     price: 267450,
   },
 ];
+
+export const propertyType = [
+  "Apartment",
+  "House",
+  "Condo",
+  "Townhouse",
+  "Villa",
+  "Studio",
+  "Penthouse",
+];
+
+export const bedrooms = ["Studio", "1 Bedroom", "2 Bedrooms", "3+ Bedrooms"];
+
+export const amenities = [
+  "Wi-Fi",
+  "Air Conditioning",
+  "Heating",
+  "Swimming Pool",
+  "Parking",
+  "Fitness Center/Gym",
+  "Pet Friendly",
+  "Balcony/Patio",
+  "Garden/Yard",
+  "Washer/Dryer",
+];

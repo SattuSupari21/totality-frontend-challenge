@@ -20,11 +20,13 @@ export default function PropertyItems() {
               alt="property_image"
               className="rounded-xl"
             />
-            <CardTitle className="pt-2">{item.title}</CardTitle>
+            <CardTitle className="pt-2 text-xl">{item.title}</CardTitle>
             <CardDescription>{item.location}</CardDescription>
             <div className="flex items-center justify-between">
-              <span className="font-bold">Rs. {item.price}</span>
-              <span className="font-bold">{item.bedrooms} bedroom(s)</span>
+              <span className="font-bold text-sm">Rs. {item.price}</span>
+              <span className="font-bold text-sm">
+                {item.bedrooms} bedroom(s)
+              </span>
             </div>
           </CardHeader>
           <CardContent>
