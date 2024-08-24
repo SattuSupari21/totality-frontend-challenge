@@ -1,20 +1,31 @@
 import { cartState } from "@/state/atoms/cart";
 import { CartType } from "@/types/cart-type";
 import { format } from "date-fns";
-import { useRecoilValue } from "recoil";
+import { Trash } from "lucide-react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { Button } from "./ui/button";
 
 export default function ItemCard() {
-  const cartItems = useRecoilValue(cartState);
+  const [cartItems, setCartItems] = useRecoilState(cartState);
+
+  function handleDeleteItemFromCart(item: CartType, amount: number) {
+    const newAmount = cartItems.totalAmount - amount;
+    const filteredCart = cartItems.properties.filter(
+      (val: CartType) => val.id !== item.id
+    );
+    setCartItems({ properties: filteredCart, totalAmount: newAmount });
+  }
+
   return (
     <div className="col-span-2 flex flex-col gap-4">
       {cartItems.properties.map((item: CartType) => (
-        <div className="flex max-[768px]:flex-col gap-2 p-2 bg-accent rounded-xl shadow-lg">
+        <div className="flex max-[768px]:flex-col gap-4 p-4 bg-accent rounded-xl shadow-lg">
           <img
             src="https://rapidapi.com/blog/wp-content/uploads/2018/10/architecture-1836070_640.jpg"
             alt="property_image"
             className="rounded-xl min-[768px]:w-3/12"
           />
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-1 flex-col gap-1">
             <span className="text-lg font-medium">{item.title}</span>
             <span>
               Booking Date:{" "}
@@ -26,6 +37,14 @@ export default function ItemCard() {
             </span>
             <span>Guests: {item.guests}</span>
             <span>Total Price: ₹{item.totalPrice}</span>
+            <Button
+              variant={"destructive"}
+              size="icon"
+              className="mt-2 ml-auto"
+              onClick={() => handleDeleteItemFromCart(item, item.totalPrice)}
+            >
+              <Trash className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       ))}
