@@ -48,11 +48,11 @@ export default function PropertyItems() {
           .map((item) => (
             <Card
               key={item.id}
-              className="flex flex-col justify-between shadow-lg"
+              className="flex flex-col justify-between shadow-lg hover:bg-accent transition-all"
             >
               <CardHeader>
                 <img
-                  src={item.images[0]}
+                  src={item.image}
                   alt="property_image"
                   className="rounded-xl"
                 />

@@ -1,7 +1,7 @@
 export type CartType = {
   id: number;
   title: string;
-  images: string[];
+  image: string;
   dateFrom: Date;
   dateTo: Date;
   guests: number;

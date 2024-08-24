@@ -17,7 +17,7 @@ model Property {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   slug          String    @unique
   title         String
-  images        String[]
+  image         String
   description   String?
   location      String
   bedrooms      Int
@@ -31,7 +31,7 @@ model Property {
 model Cart {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  images      String[]
+  image       String
   dateFrom    DateTime
   dateTo      DateTime
   guests      Int

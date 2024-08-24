@@ -61,7 +61,7 @@ export default function PropertyDetails({ slug }: { slug: string }) {
           {
             id: item.id,
             title: item.title,
-            images: item.images,
+            image: item.image,
             dateFrom: checkInDate,
             dateTo: checkOutDate,
             guests,
@@ -85,7 +85,7 @@ export default function PropertyDetails({ slug }: { slug: string }) {
               className="flex min-[1024px]:flex-row flex-col mx-auto gap-8"
             >
               <img
-                src={item.images[0]}
+                src={item.image}
                 alt="property_image"
                 className="rounded-xl mx-auto h-2/8 w-2/8 md:w-[640px] md:h-[500px]"
               />

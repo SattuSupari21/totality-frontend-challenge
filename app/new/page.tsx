@@ -32,7 +32,7 @@ export default function AddNewPropertyComponent() {
 
   const [newProperty, setNewProperty] = useState({
     title: "",
-    images: [],
+    image: "",
     description: "",
     location: "",
     bedrooms: 0,
@@ -63,7 +63,7 @@ export default function AddNewPropertyComponent() {
     setAmenitiesValue([]);
     setNewProperty({
       title: "",
-      images: [],
+      image: "",
       description: "",
       location: "",
       bedrooms: 0,
@@ -115,14 +115,14 @@ export default function AddNewPropertyComponent() {
             </div>
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="images">Image URL</Label>
+                <Label htmlFor="image">Image URL</Label>
                 <Input
-                  id="images"
+                  id="image"
                   type="text"
                   placeholder="Enter image URL"
-                  value={newProperty.images}
+                  value={newProperty.image}
                   onChange={(e) =>
-                    handleNewPropertyChange("images", e.target.value)
+                    handleNewPropertyChange("image", e.target.value)
                   }
                 />
               </div>

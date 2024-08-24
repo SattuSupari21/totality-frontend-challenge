@@ -19,7 +19,7 @@ export default function PaymentCard() {
               type="number"
               className="px-4 py-3 bg-transparent w-full text-sm outline-none"
             />
-            <label className="block text-base font-semibold mb-2">
+            <label className="mt-4 block text-base font-semibold mb-2">
               Card Holder Name
             </label>
             <Input
