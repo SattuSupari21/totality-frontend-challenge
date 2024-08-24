@@ -1,4 +1,3 @@
-import { properties } from "@/app/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,11 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { propertyState } from "@/state/atoms/property";
-import { MapPin } from "lucide-react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { MapPin, PlusIcon } from "lucide-react";
+import { useRecoilValue } from "recoil";
 import { Input } from "./ui/input";
 import { useMediaQuery } from "usehooks-ts";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function PropertyItems() {
   const isDesktop = useMediaQuery("(min-width: 768px)", {
@@ -21,7 +21,6 @@ export default function PropertyItems() {
   });
 
   const propertyListings = useRecoilValue(propertyState);
-  const setPropertyListings = useSetRecoilState(propertyState);
 
   const [query, setQuery] = useState("");
 
@@ -30,10 +29,18 @@ export default function PropertyItems() {
   ) : (
     <div className="flex flex-1 flex-col gap-2">
       {isDesktop && (
-        <Input
-          placeholder="Search for properties..."
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        <div className="flex gap-2">
+          <Input
+            placeholder="Search for properties..."
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <Link href="/new" className="flex gap-2">
+            <Button>
+              <PlusIcon className="w-4 h-4 mr-1" />
+              <span>Add new property</span>
+            </Button>
+          </Link>
+        </div>
       )}
       <main className="grid lg:grid-cols-3 grid-rows-2 md:grid-cols-2 gap-4">
         {propertyListings.items

@@ -22,6 +22,8 @@ import {
 } from "@/state/atoms/filter";
 import { propertyState } from "@/state/atoms/property";
 import { properties } from "@/app/constants";
+import Link from "next/link";
+import { PlusIcon } from "lucide-react";
 
 export default function SidebarMobile() {
   const setPropertyListings = useSetRecoilState(propertyState);
@@ -93,8 +95,14 @@ export default function SidebarMobile() {
           <Button variant={"outline"}>Filters</Button>
         </DrawerTrigger>
         <Button variant={"secondary"} onClick={clearFilters}>
-          Clear Filters
+          Clear
         </Button>
+        <Link href="/new" className="flex gap-2">
+          <Button>
+            <PlusIcon className="w-4 h-4 mr-1" />
+            <span>New</span>
+          </Button>
+        </Link>
         <DrawerContent>
           <DrawerHeader>
             <DrawerTitle>Filters</DrawerTitle>

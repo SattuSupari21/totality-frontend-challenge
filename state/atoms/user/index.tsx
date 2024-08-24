@@ -5,7 +5,7 @@ export const userState = atom({
   key: "userState", // unique ID (with respect to other atoms/selectors)
   default: {
     id: 0,
-    name: "",
+    name: "samtu",
     email: "",
     isLoading: false,
   },
