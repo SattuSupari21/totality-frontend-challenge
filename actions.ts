@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { prisma } from "./db";
-import { generateToken } from "./lib/auth";
+import { generateToken, verifyToken } from "./lib/auth";
 import { revalidatePath } from "next/cache";
 
 export async function LoginUser({
@@ -23,7 +23,11 @@ export async function LoginUser({
     if (!user) return { error: "Invalid email or password!", status: 411 };
 
     let userId = user.id;
-    const token = generateToken(userId);
+    const token = generateToken({
+      userId,
+      username: user.username,
+      email: user.email,
+    });
 
     cookies().set("auth", token);
     return {
@@ -65,7 +69,11 @@ export async function SignupUser({
       },
     });
     let userId = newUser.id;
-    const token = generateToken(userId);
+    const token = generateToken({
+      userId,
+      username: newUser.username,
+      email: newUser.email,
+    });
 
     cookies().set("auth", token);
 
@@ -85,4 +93,16 @@ export async function SignupUser({
 export async function LogoutUser() {
   cookies().delete("auth");
   revalidatePath("/");
+}
+
+export async function getUserData(authToken: string) {
+  try {
+    const user = verifyToken(authToken);
+    return {
+      user,
+      status: 200,
+    };
+  } catch (error) {
+    return { error: (error as Error).message };
+  }
 }

@@ -12,12 +12,31 @@ import { Menu, ShoppingCart } from "lucide-react";
 import { ThemeModeToggle } from "./theme-mode-toggle";
 import { useRecoilState } from "recoil";
 import { userState } from "@/state/atoms/user";
-import { LogoutUser } from "@/actions";
+import { getUserData, LogoutUser } from "@/actions";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { getCookie } from "cookies-next";
 
 export default function Header() {
   const router = useRouter();
   const [user, setUser] = useRecoilState(userState);
+
+  useEffect(() => {
+    const token = getCookie("auth");
+    if (token) {
+      getUserData(token).then(function (result) {
+        if (result && result.status === 200) {
+          setUser({
+            // @ts-ignore
+            name: result.user.username,
+            // @ts-ignore
+            email: result.user.email,
+            isLoading: false,
+          });
+        }
+      });
+    }
+  }, []);
 
   async function handleLogout() {
     await LogoutUser();
