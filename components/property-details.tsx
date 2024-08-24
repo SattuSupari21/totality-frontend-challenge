@@ -123,7 +123,7 @@ export default function PropertyDetails({ slug }: { slug: string }) {
                   )}
 
                   <span className="lg:text-base md:text-base min-[425px]:text-sm">
-                    "{item.description}"
+                    {item.description}
                   </span>
                 </div>
 

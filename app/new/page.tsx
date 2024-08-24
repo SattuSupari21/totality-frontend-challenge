@@ -55,7 +55,6 @@ export default function AddNewPropertyComponent() {
       amenities: amenitiesValue,
       ...newProperty,
     };
-    console.log(newPropertyData);
     setPropertyListings({
       items: [...propertyListings.items, newPropertyData],
       isLoading: false,

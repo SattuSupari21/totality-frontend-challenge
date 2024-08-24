@@ -19,7 +19,10 @@ export default function ItemCard() {
   return (
     <div className="col-span-2 flex flex-col gap-4">
       {cartItems.properties.map((item: CartType) => (
-        <div className="flex max-[768px]:flex-col gap-4 p-4 bg-accent rounded-xl shadow-lg">
+        <div
+          key={item.id}
+          className="flex max-[768px]:flex-col gap-4 p-4 bg-accent rounded-xl shadow-lg"
+        >
           <img
             src={item.image}
             alt="property_image"
