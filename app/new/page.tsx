@@ -16,13 +16,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useRecoilState } from "recoil";
+import { propertyState } from "@/state/atoms/property";
 
 export default function AddNewPropertyComponent() {
   const [amenitiesValue, setAmenitiesValue] = useState([]);
 
+  const [propertyListings, setPropertyListings] = useRecoilState(propertyState);
+
   const [newProperty, setNewProperty] = useState({
     title: "",
-    image: [],
+    images: [],
     description: "",
     location: "",
     bedrooms: 0,
@@ -45,10 +49,14 @@ export default function AddNewPropertyComponent() {
       ...newProperty,
     };
     console.log(newPropertyData);
+    setPropertyListings({
+      items: [...propertyListings.items, newPropertyData],
+      isLoading: false,
+    });
     setAmenitiesValue([]);
     setNewProperty({
       title: "",
-      image: [],
+      images: [],
       description: "",
       location: "",
       bedrooms: 0,
@@ -94,14 +102,14 @@ export default function AddNewPropertyComponent() {
             </div>
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="image">Image URL</Label>
+                <Label htmlFor="images">Image URL</Label>
                 <Input
-                  id="image"
+                  id="images"
                   type="text"
                   placeholder="Enter image URL"
-                  value={newProperty.image}
+                  value={newProperty.images}
                   onChange={(e) =>
-                    handleNewPropertyChange("image", e.target.value)
+                    handleNewPropertyChange("images", e.target.value)
                   }
                 />
               </div>
