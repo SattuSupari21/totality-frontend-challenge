@@ -18,6 +18,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRecoilState } from "recoil";
 import { propertyState } from "@/state/atoms/property";
+import slugify from "react-slugify";
+import { title } from "process";
 
 export default function AddNewPropertyComponent() {
   const [amenitiesValue, setAmenitiesValue] = useState([]);
@@ -45,6 +47,7 @@ export default function AddNewPropertyComponent() {
     const newId = properties.length + 1;
     const newPropertyData = {
       id: newId,
+      slug: slugify(title),
       amenities: amenitiesValue,
       ...newProperty,
     };
@@ -69,7 +72,7 @@ export default function AddNewPropertyComponent() {
     <main>
       <Header />
       <div className="container">
-        <section className="container px-4 md:px-6 py-12 md:py-16">
+        <section className="container px-0 md:px-6 py-4">
           <h2 className="text-2xl md:text-3xl font-bold mb-8">
             Add New Rental Property
           </h2>

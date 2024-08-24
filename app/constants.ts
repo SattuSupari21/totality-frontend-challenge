@@ -4,6 +4,7 @@ export const properties: Property[] = [
   {
     id: 1,
     title: "Cozy Cabin in the Woods",
+    slug: "cozy-cabin-in-the-woods",
     images: ["asd", "asd2"],
     description:
       "Escape to this charming cabin nestled in the heart of the Blue Ridge Mountains. Enjoy the peaceful surroundings and easy access to hiking trails.",
@@ -11,22 +12,24 @@ export const properties: Property[] = [
     bedrooms: 4,
     type: "Apartment",
     amenities: ["Gym", "Swimming Pool"],
-    price: 1000000,
+    price: 10000,
   },
   {
     id: 2,
     title: "Beachfront Condo",
+    slug: "beachfront-condo",
     images: ["asd", "asd2"],
     description:
       "Wake up to stunning ocean views in this modern condo just steps from the beach. Perfect for a relaxing getaway or romantic retreat.",
     location: "Doiwala",
     bedrooms: 6,
     type: "Penthouse",
-    price: 55000,
+    price: 25000,
   },
   {
     id: 3,
     title: "Loft Apartment in the City",
+    slug: "loft-apartment-in-the-city",
     images: ["asd", "asd2"],
     description:
       "Experience city living in this stylish loft apartment. Centrally located, with easy access to top restaurants, shops, and attractions.",
@@ -34,17 +37,18 @@ export const properties: Property[] = [
     bedrooms: 2,
     type: "Villa",
     amenities: ["Casino", "Gym"],
-    price: 450000,
+    price: 45000,
   },
   {
     id: 4,
     title: "fourth property",
+    slug: "fourth-property",
     images: ["asd", "asd2"],
     description: "this is a description for fourth property",
     location: "Prem Nagar",
     bedrooms: 8,
     type: "Penthouse",
-    price: 267450,
+    price: 16150,
   },
 ];
 

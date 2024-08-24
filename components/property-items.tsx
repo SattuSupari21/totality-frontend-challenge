@@ -62,7 +62,7 @@ export default function PropertyItems() {
                   {item.location}
                 </CardDescription>
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm">Rs. {item.price}</span>
+                  <span className="font-bold text-sm">₹{item.price}/night</span>
                   <span className="font-bold text-sm">
                     {item.bedrooms} bedroom(s)
                   </span>
@@ -80,7 +80,9 @@ export default function PropertyItems() {
                 <CardDescription className=" text-wrap">
                   {item.description}
                 </CardDescription>
-                <Button className="w-full mt-4">Book Now</Button>
+                <Link href={`/property/${item.slug}`}>
+                  <Button className="w-full mt-4">Book Now</Button>
+                </Link>
               </CardContent>
             </Card>
           ))}

@@ -1,6 +1,7 @@
 export type Property = {
   id: number;
   title: string;
+  slug: string;
   images: string[];
   description: string;
   location: string;
