@@ -1,9 +1,69 @@
-import { properties } from "@/app/constants";
+"use client";
+
+import { guestsOptions, properties } from "@/app/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Bed, House, MapPin } from "lucide-react";
+import { Bed, CalendarIcon, House, MapPin } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Calendar } from "./ui/calendar";
+import { Dispatch, SetStateAction, useState } from "react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Property } from "@/types/property-type";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { cartState } from "@/state/atoms/cart";
 
 export default function PropertyDetails({ slug }: { slug: string }) {
+  const [cart, setCart] = useRecoilState(cartState);
+
+  const [checkInDate, setCheckInDate] = useState<Date>();
+  const [checkOutDate, setCheckOutDate] = useState<Date>();
+  const [guests, setGuests] = useState<number>();
+
+  function handleAddToCart(item: Property) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    let totalDays = 0;
+    let totalPrice = 0;
+
+    if (checkInDate && checkOutDate) {
+      totalDays = Math.round(
+        (checkOutDate.valueOf() - checkInDate.valueOf()) / oneDay
+      );
+    }
+
+    if (totalDays > 0 && guests && guests > 0) {
+      totalPrice = totalDays * item.price * guests;
+      setCart({
+        properties: [
+          // @ts-ignore
+          ...cart.properties,
+          // @ts-ignore
+          {
+            id: item.id,
+            title: item.title,
+            images: item.images,
+            dateFrom: checkInDate,
+            dateTo: checkOutDate,
+            guests,
+            totalPrice,
+          },
+        ],
+        totalAmount: cart.totalAmount + totalPrice,
+      });
+    }
+
+    console.log(cart);
+  }
+
   return (
     <div className="container">
       <section className="container px-0 md:px-6 py-4">
@@ -57,11 +117,46 @@ export default function PropertyDetails({ slug }: { slug: string }) {
                   </span>
                 </div>
 
-                <div className="md:mt-12 min-[425px]:mt-12">
+                <div className="flex flex-col gap-2 md:mt-12 min-[425px]:mt-12">
                   <span className="lg:text-xl md:text-xl min-[425px]:text-lg font-semibold">
-                    ₹{item.price}/night
+                    <span className="text-primary">₹{item.price}</span>/night
                   </span>
-                  <Button className="w-full mt-4">Add to Cart</Button>
+                  <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-2">
+                      <span>Check-in</span>
+                      <DatePicker date={checkInDate} setDate={setCheckInDate} />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <span>Check-out</span>
+                      <DatePicker
+                        date={checkOutDate}
+                        setDate={setCheckOutDate}
+                      />
+                    </div>
+                  </div>
+                  <span>Guests</span>
+                  <Select onValueChange={(value) => setGuests(parseInt(value))}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Property Type</SelectLabel>
+                        {guestsOptions.map((item, index) => (
+                          <SelectItem key={index} value={item.value.toString()}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Button
+                    className="w-full mt-4"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    Add to Cart
+                  </Button>
                 </div>
               </div>
             </div>
@@ -69,4 +164,37 @@ export default function PropertyDetails({ slug }: { slug: string }) {
       </section>
     </div>
   );
+
+  function DatePicker({
+    date,
+    setDate,
+  }: {
+    date: Date | undefined;
+    setDate: Dispatch<SetStateAction<Date | undefined>>;
+  }) {
+    return (
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant={"outline"}
+            className={cn(
+              "w-full justify-start text-left font-normal",
+              !date && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : <span>Pick a date</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+    );
+  }
 }

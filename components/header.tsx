@@ -8,13 +8,16 @@ import {
   NavigationMenuList,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
-import { Menu, PlusIcon } from "lucide-react";
+import { Menu, PlusIcon, ShoppingCart } from "lucide-react";
 import { ThemeModeToggle } from "./theme-mode-toggle";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/state/atoms/user";
+import { cartState } from "@/state/atoms/cart";
 
 export default function Header() {
   const user = useRecoilValue(userState);
+
+  const cart = useRecoilValue(cartState);
 
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -88,6 +91,12 @@ export default function Header() {
         ) : (
           <div className="ml-auto flex gap-2 items-center">
             <span>Hello, {user.name}</span>
+            <Link href="/cart">
+              <Button variant={"secondary"} className="flex items-center gap-1">
+                <ShoppingCart className="w-4 h-4" />
+                <span>Cart</span>
+              </Button>
+            </Link>
             <ThemeModeToggle />
           </div>
         )}
