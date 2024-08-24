@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { prisma } from "./db";
 import { generateToken, verifyToken } from "./lib/auth";
 import { revalidatePath } from "next/cache";
+import { properties } from "./app/constants";
 
 export async function LoginUser({
   email,
@@ -108,4 +109,25 @@ export async function getUserData(authToken: string) {
   } catch (error) {
     return { error: (error as Error).message };
   }
+}
+
+export async function populateDB() {
+  properties.map(async (property) => {
+    await prisma.property.create({
+      data: {
+        slug: property.slug,
+        title: property.title,
+        image: property.image,
+        description: property.description,
+        location: property.location,
+        bedrooms: property.bedrooms,
+        type: property.type,
+        amenities: property.amenities,
+        price: property.price,
+        userId: "66ca0a5a088933cbf28af5eb",
+      },
+    });
+  });
+  console.log("Done!");
+  return;
 }
