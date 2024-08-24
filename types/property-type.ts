@@ -3,7 +3,7 @@ export type Property = {
   title: string;
   slug: string;
   image: string;
-  description: string;
+  description: string | null;
   location: string;
   bedrooms: number;
   type: string;

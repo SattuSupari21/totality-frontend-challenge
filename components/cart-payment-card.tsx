@@ -2,6 +2,7 @@ import { cartState } from "@/state/atoms/cart";
 import { useRecoilValue } from "recoil";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function PaymentCard() {
   const cartItems = useRecoilValue(cartState);
@@ -98,9 +99,11 @@ export default function PaymentCard() {
           </li>
         </ul>
 
-        <Button className="mt-8 text-sm px-4 py-3 w-full font-semibold tracking-wide">
-          Make Payment{" "}
-        </Button>
+        <Link href="/complete">
+          <Button className="mt-8 text-sm px-4 py-3 w-full font-semibold tracking-wide">
+            Make Payment{" "}
+          </Button>
+        </Link>
       </form>
     </div>
   );
