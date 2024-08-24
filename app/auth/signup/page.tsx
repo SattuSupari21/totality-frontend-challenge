@@ -7,6 +7,7 @@ import { userState } from "@/state/atoms/user";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useSetRecoilState } from "recoil";
 
 export default function Signup() {
@@ -27,7 +28,7 @@ export default function Signup() {
         });
         router.push("/");
       } else {
-        console.log(result.message);
+        toast.error("Invalid Inputs");
       }
     });
   }
@@ -50,6 +51,7 @@ export default function Signup() {
               onChange={(e) => setUsername(e.target.value)}
             />
             <Input
+              type="email"
               placeholder="Your email"
               className="focus:border-none"
               onChange={(e) => setEmail(e.target.value)}

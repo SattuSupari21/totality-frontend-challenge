@@ -52,6 +52,9 @@ export async function SignupUser({
   password: string;
 }) {
   try {
+    if (!email || !username || !password) {
+      throw new Error("Invalid inputs");
+    }
     const existingUser = await prisma.user.findUnique({
       where: {
         email,
