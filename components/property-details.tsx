@@ -19,17 +19,28 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Property } from "@/types/property-type";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "@/state/atoms/cart";
+import { userState } from "@/state/atoms/user";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function PropertyDetails({ slug }: { slug: string }) {
+  const user = useRecoilValue(userState);
   const [cart, setCart] = useRecoilState(cartState);
 
   const [checkInDate, setCheckInDate] = useState<Date>();
   const [checkOutDate, setCheckOutDate] = useState<Date>();
   const [guests, setGuests] = useState<number>();
 
+  const router = useRouter();
+
   function handleAddToCart(item: Property) {
+    if (!user.isLoading) {
+      if (!user.name) {
+        return router.push("/auth/login");
+      }
+    }
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     let totalDays = 0;
     let totalPrice = 0;
@@ -59,9 +70,8 @@ export default function PropertyDetails({ slug }: { slug: string }) {
         ],
         totalAmount: cart.totalAmount + totalPrice,
       });
+      toast.success("Added to cart!");
     }
-
-    console.log(cart);
   }
 
   return (
@@ -75,9 +85,9 @@ export default function PropertyDetails({ slug }: { slug: string }) {
               className="flex min-[1024px]:flex-row flex-col mx-auto gap-8"
             >
               <img
-                src="https://rapidapi.com/blog/wp-content/uploads/2018/10/architecture-1836070_640.jpg"
+                src={item.images[0]}
                 alt="property_image"
-                className="rounded-xl w-2/8"
+                className="rounded-xl mx-auto h-2/8 w-2/8 md:w-[640px] md:h-[500px]"
               />
               <div className="flex flex-1 flex-col justify-between">
                 <div className="flex flex-col gap-4">

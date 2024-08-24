@@ -21,7 +21,7 @@ export default function ItemCard() {
       {cartItems.properties.map((item: CartType) => (
         <div className="flex max-[768px]:flex-col gap-4 p-4 bg-accent rounded-xl shadow-lg">
           <img
-            src="https://rapidapi.com/blog/wp-content/uploads/2018/10/architecture-1836070_640.jpg"
+            src={item.images[0]}
             alt="property_image"
             className="rounded-xl min-[768px]:w-3/12"
           />

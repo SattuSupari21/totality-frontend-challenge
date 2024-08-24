@@ -52,7 +52,7 @@ export default function PropertyItems() {
             >
               <CardHeader>
                 <img
-                  src="https://rapidapi.com/blog/wp-content/uploads/2018/10/architecture-1836070_640.jpg"
+                  src={item.images[0]}
                   alt="property_image"
                   className="rounded-xl"
                 />
