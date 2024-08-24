@@ -1,16 +1,36 @@
 "use client";
 
+import { SignupUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { userState } from "@/state/atoms/user";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 export default function Signup() {
+  const router = useRouter();
+  const setUser = useSetRecoilState(userState);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  const [showError, setShowError] = useState(false);
+  function handleUserSignup() {
+    SignupUser({ email, username, password }).then(function (result) {
+      if (result.user) {
+        setUser({
+          isLoading: false,
+          name: result.user.username,
+          email: result.user.email,
+        });
+        router.push("/");
+      } else {
+        console.log(result.message);
+      }
+    });
+  }
 
   return (
     <main className="flex items-center justify-center">
@@ -40,7 +60,9 @@ export default function Signup() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button className="shadow-xl">Sign up</Button>
+          <Button className="shadow-xl" onClick={handleUserSignup}>
+            Sign up
+          </Button>
           <span className="m-auto">
             Already have an account?{" "}
             <Link href={"/auth/login"} className="text-blue-400">

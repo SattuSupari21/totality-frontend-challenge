@@ -1,15 +1,36 @@
 "use client";
 
+import { LoginUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { userState } from "@/state/atoms/user";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useSetRecoilState } from "recoil";
 
 export default function Login() {
+  const router = useRouter();
+  const setUser = useSetRecoilState(userState);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [showError, setShowError] = useState(false);
+  async function handleUserLogin() {
+    await LoginUser({ email, password }).then(function (result) {
+      if (result.user) {
+        setUser({
+          isLoading: false,
+          name: result.user.username,
+          email: result.user.email,
+        });
+        router.push("/");
+      } else {
+        toast.error(result.error);
+      }
+    });
+  }
 
   return (
     <main className="flex items-center justify-center">
@@ -33,12 +54,9 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {showError && (
-            <span className="text-red-500 text-center">
-              Invalid Email or Password!
-            </span>
-          )}
-          <Button className="shadow-xl">Login</Button>
+          <Button className="shadow-xl" onClick={handleUserLogin}>
+            Login
+          </Button>
           <span className="mx-auto">
             Dont have an account? Create a{" "}
             <Link href={"/auth/signup"} className="text-blue-400">

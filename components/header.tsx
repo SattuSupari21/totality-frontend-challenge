@@ -8,16 +8,22 @@ import {
   NavigationMenuList,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
-import { Menu, PlusIcon, ShoppingCart } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 import { ThemeModeToggle } from "./theme-mode-toggle";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userState } from "@/state/atoms/user";
-import { cartState } from "@/state/atoms/cart";
+import { LogoutUser } from "@/actions";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const user = useRecoilValue(userState);
+  const router = useRouter();
+  const [user, setUser] = useRecoilState(userState);
 
-  const cart = useRecoilValue(cartState);
+  async function handleLogout() {
+    await LogoutUser();
+    setUser({ name: "", email: "", isLoading: false });
+    router.push("/");
+  }
 
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -78,17 +84,7 @@ export default function Header() {
             </NavigationMenuLink>
           </NavigationMenuList>
         </NavigationMenu>
-        {!user.isLoading && !user.name ? (
-          <div className="ml-auto flex gap-2 items-center">
-            <Link href="/auth/login">
-              <Button variant="outline">Log In</Button>
-            </Link>
-            <Link href="/auth/signup">
-              <Button>Sign Up</Button>
-            </Link>
-            <ThemeModeToggle />
-          </div>
-        ) : (
+        {!user.isLoading && user.name ? (
           <div className="ml-auto flex gap-2 items-center">
             <span>Hello, {user.name}</span>
             <Link href="/cart">
@@ -96,6 +92,17 @@ export default function Header() {
                 <ShoppingCart className="w-4 h-4" />
                 <span>Cart</span>
               </Button>
+            </Link>
+            <Button onClick={handleLogout}>Logout</Button>
+            <ThemeModeToggle />
+          </div>
+        ) : (
+          <div className="ml-auto flex gap-2 items-center">
+            <Link href="/auth/login">
+              <Button variant="outline">Log In</Button>
+            </Link>
+            <Link href="/auth/signup">
+              <Button>Sign Up</Button>
             </Link>
             <ThemeModeToggle />
           </div>

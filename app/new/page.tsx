@@ -16,12 +16,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { propertyState } from "@/state/atoms/property";
 import slugify from "react-slugify";
 import { title } from "process";
+import { userState } from "@/state/atoms/user";
+import { useRouter } from "next/navigation";
 
 export default function AddNewPropertyComponent() {
+  const user = useRecoilValue(userState);
+
   const [amenitiesValue, setAmenitiesValue] = useState([]);
 
   const [propertyListings, setPropertyListings] = useRecoilState(propertyState);
@@ -67,6 +71,12 @@ export default function AddNewPropertyComponent() {
       price: 0,
     });
   };
+
+  const router = useRouter();
+
+  if (!user.isLoading && !user.name) {
+    router.push("/auth/login");
+  }
 
   return (
     <main>
